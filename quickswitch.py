@@ -26,7 +26,7 @@ import argparse
 import subprocess
 import os
 import re
-
+from distutils.spawn import find_executable
 try:
     import i3
 except ImportError:
@@ -37,11 +37,8 @@ except ImportError:
 
 def check_dmenu():
     '''Check if dmenu is available.'''
-    devnull = open(os.devnull)
-    retcode = subprocess.call(["which", "dmenu"],
-                              stdout=devnull,
-                              stderr=devnull)
-    return True if retcode == 0 else False
+    executable = find_executable("dmenu")
+    return executable != None
 
 
 def dmenu(options, dmenu):
